@@ -3,7 +3,6 @@ import platform
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
 
-
 def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):
     server_address = ('', 8000)
     httpd = server_class(server_address, handler_class)
@@ -11,7 +10,6 @@ def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):
         httpd.serve_forever()
     except KeyboardInterrupt:
         httpd.server_close()
-
 
 class HTTPGetHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -26,10 +24,8 @@ class HTTPGetHandler(BaseHTTPRequestHandler):
         self.render(text)
 
     def render(self, text):
-        if platform.system() == 'Windows':
-            indexPath = 'C:\\Users\\Adeon\\PycharmProjects\\VALERA\\template\\index.html'
-        else:
-            indexPath = os.path.join('.', 'template', 'index.html')
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        indexPath = os.path.join(dir_path, 'template', 'index.html')
 
         with open(indexPath, 'r', encoding="utf8") as file:
             template = file.read()
