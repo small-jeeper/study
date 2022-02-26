@@ -1,5 +1,7 @@
+import os
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
+
 
 def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):
     server_address = ('', 8000)
@@ -8,6 +10,7 @@ def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):
         httpd.serve_forever()
     except KeyboardInterrupt:
         httpd.server_close()
+
 
 class HTTPGetHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -22,8 +25,8 @@ class HTTPGetHandler(BaseHTTPRequestHandler):
         self.render(text)
 
     def render(self, text):
-
-        with open('C:\\Users\\Adeon\\PycharmProjects\\VALERA\\template\\index.html', 'r', encoding="utf8") as file:
+        indexPath = os.path.join('.', 'template', 'index.html')
+        with open(indexPath, 'r', encoding="utf8") as file:
             template = file.read()
             template = template.replace("{div_placeholder_1}", text)
 
