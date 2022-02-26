@@ -1,4 +1,5 @@
 import os
+import platform
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
 
@@ -25,7 +26,11 @@ class HTTPGetHandler(BaseHTTPRequestHandler):
         self.render(text)
 
     def render(self, text):
-        indexPath = os.path.join('.', 'template', 'index.html')
+        if platform.system() == 'Windows':
+            indexPath = 'C:\\Users\\Adeon\\PycharmProjects\\VALERA\\template\\index.html'
+        else:
+            indexPath = os.path.join('.', 'template', 'index.html')
+
         with open(indexPath, 'r', encoding="utf8") as file:
             template = file.read()
             template = template.replace("{div_placeholder_1}", text)
